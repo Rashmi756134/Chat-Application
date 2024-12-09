@@ -1,0 +1,160 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+}
+
+.navbar{
+    padding:12px 35px 12px 15px ;
+    background: #70b1ba;
+    font-family: calibri;
+
+}
+.navdiv{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.logo a{
+    font-family: sans-serif;
+    font-size: 25px;
+    font-weight: 600;
+    color: white;
+}
+li {
+    list-style: none;
+    display: inline-block;
+}
+li a{
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    margin-right: 25px;
+}
+.button{
+    background-color: black;
+    margin-left: 10px;
+    border-radius: 10px;
+    padding: 10px;
+    width: 90px;
+}
+.button a{
+    color: white;
+    font-weight: bold;
+    font-size: 13px;
+}
+body{
+    background-image: url("../image/chatting.jpg");
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.text1{
+    font-size: 1.3rem;
+    color:azure;
+    font-weight: bold;
+    padding-right: 90px;
+}
+.texter{
+    font-size: 5px;
+    color: #0400ff;
+
+}
+
+.parent {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    margin-left: 120px;
+}
+h1 {
+    padding-top: 80px;
+    margin-bottom: 40px;
+    font-size: 35px;
+}
+
+.child {
+    display: flex;
+    /* background-color: #37e763; */
+    height: 65vh;
+    width: 45%;
+    border-radius: 20px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+.child{
+    display: flex;
+    position: relative;
+    justify-content: center;
+    background:transparent;
+    border: 2px solid #6ff4e6;
+    border-radius: 10%;
+    backdrop-filter: blur(15px);
+}
+
+form {
+    width: 80%;
+    padding-bottom: 150px;
+
+}
+label {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+input {
+    padding: 10px;
+    border: 1px solid dodgerblue;
+    width: 100%;
+    margin: 10px;
+    border-radius: 5px;
+    margin-bottom: 30px;
+}
+
+button {
+    font-size: 15px;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+    display: inline-block;
+    text-align: center;
+    font-weight: bold;
+    padding: 0.7em 2em;
+    border: 3px solid #0400ff;
+    border-radius: 7px;
+    position: relative;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.16),0 3px 6px rgpa(0,0,0,0.1);
+    color: #0400ff;
+    text-decoration: none;
+    transition:0.3s ease all;
+    z-index: 1;
+}
+button:before {
+    transition: 0.5s all ease;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    right: 50%;
+    bottom: 0;
+    content: '';
+    background-color: #0400ff;
+    z-index: -1;
+
+}
+
+button:hover, button:focus {
+    color: whitesmoke;
+}
+button:hover:before,button:focus:before {
+    transition: 0.5s all ease;
+    left: 0;
+    right: 0;
+    opacity: 1;
+}
+
+button:active {
+    transform: scale(0.9);
+}

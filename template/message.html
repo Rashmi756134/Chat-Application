@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <title>Messages</title>
+    <!-- load static -->
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles3.css' %}">
+    <!-- link to h=css file -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+      integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+  </head>
+  <body>
+    <div class="parent">
+      <div class="child-2">
+        <center><h2>Chats</h2></center>
+        <div class="chat-body-parent">
+          <div class="chat-body" id="tasks">
+            <div class="message" id="chatContainer">
+              <!-- received messages and displayed here -->
+              {% for i in messages %} {% if i.sender != user %}
+              <div class="receive">
+                <p style="color: #000">
+                  {{i.message}}<strong>-{{i.sender}}</strong>
+                </p>
+              </div>
+              {% else %}
+              <div class="send">
+                <p style="color: #000">{{i.message}}</p>
+              </div>
+              {% endif %} {% endfor %}
+              <!-- end receive messages -->
+            </div>
+
+            <div class="form">
+              <form action="" id="message-form" method="POST">
+                {% csrf_token %}
+                <textarea id="msg" cols="30" name="message" rows="10" placeholder="Enter your message" required></textarea>
+                <button type="button" id="share-button" class="link">
+                  <i class="fa-solid fa-link"></i>
+                </button>
+                <input
+                  type="file"
+                  name="media"
+                  accept="image/*, video/*"
+                  style="display: none"
+                />
+                <button class="submit" type="submit"><i class="fa-solid fa-paper-plane"></i></button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script>
+    function scrollToBottom() {
+      var chatContainer = document.getElementById("chatContainer");
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
+
+    const websocketProtocol =
+      window.location.protocol === "https:" ? "wss" : "ws";
+    const wsEndpoint = `${websocketProtocol}://${window.location.host}/ws/notification/{{room_name}}/`;
+    const socket = new WebSocket(wsEndpoint);
+
+    socket.onopen = (event) => {
+      console.log("WebSocket connection opened!");
+    };
+
+    socket.onclose = (event) => {
+      console.log("WebSocket connection closed!");
+    };
+    <!-- share media link -->
+    document
+      .getElementById("share-button")
+      .addEventListener("click", function (event) {
+        event.preventDefault();
+        this.nextElementSibling.click();
+      });
+
+    document
+      .getElementById("message-form")
+      .addEventListener("submit", function (event) {
+        event.preventDefault();
+        const message = document.getElementById("msg").value;
+        socket.send(
+          JSON.stringify({
+            message: message,
+            room_name: "{{room_name}}",
+            sender: "{{user}}",
+          })
+        );
+      });
+
+    // response from consumer on server
+    socket.addEventListener("message", (event) => {
+      const messageData = JSON.parse(event.data)["message"];
+      console.log(messageData);
+
+      var sender = messageData["sender"];
+      var message = messageData["message"];
+
+      // empty message input field after message has been sent
+      if (sender == "{{user}}") {
+        document.getElementById("msg").value = "";
+      }
+
+      // Here's where we append the message to the chatbox.
+      var messageDiv = document.querySelector(".message");
+      if (sender != "{{user}}") {
+        // assuming you have a variable `currentUser` to hold the current user's name
+        messageDiv.innerHTML +=
+          '<div class="receive"><p style="color: #000;">' +
+          message +
+          "<strong>-" +
+          sender +
+          "</strong></p></div>";
+      } else {
+        messageDiv.innerHTML +=
+          '<div class="send"><p style="color: #000;">' + message + "</p></div>";
+      }
+      scrollToBottom();
+    });
+  </script>
+</html>
+
+
+
+for 

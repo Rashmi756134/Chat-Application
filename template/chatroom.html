@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>Enter Room</title>
+        <link rel="stylesheet" href="../static/css/styles2.css">
+        
+    </head>
+
+    <body>
+        {% csrf_token %}
+        <nav class="navbar">
+            <div class="navdiv">
+                <div class="logo"><a href="#">InsightChat</a></div>
+                <ul>
+                    <li><a href="/home">HOME</a></li>
+                    <li><a href="/chatroom">ChatRoom</a></li>
+                    <li><a href="/help">HELP</a></li>
+                    <button class="button"><a href="{% url 'logout' %}">LOGOUT</a></button>
+                </ul>
+            </div>
+        </nav>
+            <div class="parent">
+                <div class="child">
+                    <h1>Enter Room</h1>
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        <label for="">Username</label><br>
+                        <input type="text" placeholder="Username" name="username" required><br>
+                        <label for="">Room name</label><br>
+                        <input type="text" placeholder="room name" name="room" required><br><br>
+                        <center><button type="submit">Submit</button></center><br>
+                    </form>
+                </div>
+            </div>
+        </body>
+</html>
